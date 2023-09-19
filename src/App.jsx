@@ -1,37 +1,72 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import './App.css';
+import Explorer from './components/Explorer';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import axios from 'axios';
 
-function App() {
-  const [count, setCount] = useState(0)
+const API_KEY = 'pk.54ab3afe18b4d83479755a9a4f0d3d56';
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Just the Bones</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      searchQuery: '',
+      location: null,
+    };
+  }
+
+  setSearchQuery = (query) => {
+    this.setState({ searchQuery: query });
+  };
+
+  handleForm = (e) => {
+    console.log('Form Submitted');
+    e.preventDefault();
+    axios.get(`https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.searchQuery}&format=json`)
+    .then(response => {
+      console.log('SUCCESS: ', response.data);
+      this.setState({ location: response.data[0] });
+    }).catch(error => {
+      console.log('UH OH: ', error);
+    })
+  };
+
+  handleChange = (e) => {
+    this.setState({ searchQuery: e.target.value });
+  };
+
+  render() {
+    console.log('City Explorer', this.state);
+    return (
+      <>
+        <header>
+          <h1>Choose Your Own Adventure with City Explorer!</h1>
+        </header>
+
+        {/* {this.state.searchQuery 
+          ? <Explorer/> 
+          : <p>Please Enter a Location</p>} */}
+        <BrowserRouter>
+          <form onSubmit={this.handleForm}>
+            <input
+              placeholder="Enter City Name"
+              type="text"
+              name="city"
+              onChange={this.handleChange}
+            />
+            <button type='submit'>
+              Search
+              {/* <Link to="/search">Explore!</Link> */}
+            </button>
+          </form>
+          <Routes>
+            <Route exact path="/search" element={<Explorer location={this.state.location} query={this.state.searchQuery}/>} />
+            <Route path="/" element={<p>Please Enter a Location</p>} />
+          </Routes>
+        </BrowserRouter>
+      </>
+    );
+  }
 }
 
-export default App
-
-//location url  https://us1.locationiq.com/v1/search?key=YOUR_ACCESS_TOKEN&q=SEARCH_STRING&format=json
+export default App;
