@@ -27,8 +27,8 @@ This application allows users to search for a city and find information regardin
 Name of feature: Set up your React repository & API keys
 Estimate of time needed to complete: 6 hours
 Start time: 10pm
-Finish time: 12am
-Actual time needed to complete: _____
+Finish time: 12:30am
+Actual time needed to complete: 2.5 hours
 
 Name of feature: ________________________________
 Estimate of time needed to complete: _____
