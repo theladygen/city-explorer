@@ -33,3 +33,5 @@ function App() {
 }
 
 export default App
+
+//location url  https://us1.locationiq.com/v1/search?key=YOUR_ACCESS_TOKEN&q=SEARCH_STRING&format=json
