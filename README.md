@@ -52,8 +52,8 @@ Start time: 4:30pm
 Finish time:8:30pm
 Actual time needed to complete: 4 hrs
 
-Name of feature: 
-Estimate of time needed to complete: 
-Start time: 
-Finish time: 
-Actual time needed to complete: 
+Name of feature: As a user, I want clear messages if something goes wrong so I know if I need to make any changes or try again in a different manner
+Estimate of time needed to complete: 2 hrs
+Start time: 8:30pm
+Finish time: 11pm
+Actual time needed to complete: 2.5 hrs

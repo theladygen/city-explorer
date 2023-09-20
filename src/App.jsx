@@ -3,11 +3,11 @@ import './App.css';
 import Explorer from './components/Explorer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import Alert from 'react-bootstrap/Alert';
 
 
 
-const API_KEY = 'pk.54ab3afe18b4d83479755a9a4f0d3d56'
-//access this privately (.vite.env <- rename???)
+const API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
 
 class App extends React.Component {
   constructor() {
@@ -19,20 +19,12 @@ class App extends React.Component {
     };
   }
 
-  setSearchQuery = (query) => {
-    this.setState({ searchQuery: query });
-  };
-
   handleForm = (e) => {
-    console.log('Form Submitted');
     e.preventDefault();
     axios.get(`https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.searchQuery}&format=json`)
     .then(response => {
-      console.log('SUCCESS: ', response.data);
       this.setState({ location: response.data[0] });
     }).catch(error => {
-      console.log('UH OH! There has been an error! ', error);
-      //bootstrap component that renders if user hits error w/ any api call, display error status code and msg to user
       this.setState({ error: error });
     })
   };
@@ -42,7 +34,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log('City Explorer', this.state);
     return (
       <>
         <header>
@@ -61,6 +52,11 @@ class App extends React.Component {
               Explore!
             </button>
           </form>
+            {this.state.error &&
+          <Alert variant="danger"> 
+            {`${this.state.error.response.status }: ${this.state.error.response.data.error}`}
+          </Alert>
+            }
           <Routes>
             <Route exact path="/search" element={<Explorer location={this.state.location} query={this.state.searchQuery}/>} />
             <Route path="/" element={<p>Please Enter a Location</p>} />
