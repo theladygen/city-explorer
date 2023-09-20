@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
 import Explorer from './components/Explorer';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
-const API_KEY = 'pk.54ab3afe18b4d83479755a9a4f0d3d56';
+
+
+const API_KEY = 'pk.54ab3afe18b4d83479755a9a4f0d3d56'
+//access this privately (.vite.env <- rename???)
 
 class App extends React.Component {
   constructor() {
@@ -12,6 +15,7 @@ class App extends React.Component {
     this.state = {
       searchQuery: '',
       location: null,
+      error: null,
     };
   }
 
@@ -27,7 +31,9 @@ class App extends React.Component {
       console.log('SUCCESS: ', response.data);
       this.setState({ location: response.data[0] });
     }).catch(error => {
-      console.log('UH OH: ', error);
+      console.log('UH OH! There has been an error! ', error);
+      //bootstrap component that renders if user hits error w/ any api call, display error status code and msg to user
+      this.setState({ error: error });
     })
   };
 
@@ -43,9 +49,6 @@ class App extends React.Component {
           <h1>Choose Your Own Adventure with City Explorer!</h1>
         </header>
 
-        {/* {this.state.searchQuery 
-          ? <Explorer/> 
-          : <p>Please Enter a Location</p>} */}
         <BrowserRouter>
           <form onSubmit={this.handleForm}>
             <input
@@ -55,8 +58,7 @@ class App extends React.Component {
               onChange={this.handleChange}
             />
             <button type='submit'>
-              Search
-              {/* <Link to="/search">Explore!</Link> */}
+              Explore!
             </button>
           </form>
           <Routes>

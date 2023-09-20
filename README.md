@@ -1,13 +1,21 @@
 # City Explorer
 
-**Author**: Genevieve DuPuy
+**Author**: Genevieve DuPuy  
+**Version**: 1.0.0
 
 ## Overview
 
-This application allows users to search for a city and find information regarding the searched location.
+This application allows users to search for a city and find information regarding the searched location using data from API input.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+
+1. Download and install node.
+
+2. Install and set up React library.
+
+3. Create a new React application.
+
+4. Arrange files as necessary and implement functionality.
 
 ## Architecture
 
@@ -15,12 +23,14 @@ This application allows users to search for a city and find information regardin
 
 ## Change Log
 
-09-18-2023 - Version 1.0.0
+09-18-2023
 
 - Initialized project using Create React App
 
 ## Credit and Collaborations
-<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+- CodeFellows staff - instruction/tutoring
+- Tim Heuett - mentoring/tutoring
 
 ## Time Estimates
 
@@ -36,7 +46,13 @@ Start time: 12pm
 Finish time: 4pm
 Actual time needed to complete: 4 hrs
 
-Name of feature: Locations: 
+Name of feature: Locations: Map: As a user, I want to see a map of the city so that I can see the layout of the area I want to explore
+Estimate of time needed to complete: 3 hrs
+Start time: 4:30pm
+Finish time:8:30pm
+Actual time needed to complete: 4 hrs
+
+Name of feature: 
 Estimate of time needed to complete: 
 Start time: 
 Finish time: 
