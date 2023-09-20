@@ -6,7 +6,6 @@ import Image from 'react-bootstrap/Image';
 import Container from 'react-bootstrap/Container';
 
 let API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
-//access this privately (.vite.env <-rename???)
 
 class Explorer extends React.Component {
   render() {
