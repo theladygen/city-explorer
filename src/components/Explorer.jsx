@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Image from 'react-bootstrap/Image';
@@ -17,7 +17,6 @@ class Explorer extends React.Component {
 
     return (
       <main>
-        <Link to="/">Home</Link>
         <section>
           <h2>Maps</h2>
           <ListGroup>

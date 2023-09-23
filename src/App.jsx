@@ -5,9 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Alert from 'react-bootstrap/Alert';
 
-
-
 const API_KEY = import.meta.env.VITE_LOCATIONIQ_API_KEY;
+const SERVER_URL = import.meta.env.VITE_EXPRESS_SERVER_URL;
 
 class App extends React.Component {
   constructor() {
@@ -16,17 +15,29 @@ class App extends React.Component {
       searchQuery: '',
       location: null,
       error: null,
+      weather: null,
     };
   }
 
   handleForm = (e) => {
     e.preventDefault();
-    axios.get(`https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.searchQuery}&format=json`)
-    .then(response => {
-      this.setState({ location: response.data[0] });
-    }).catch(error => {
-      this.setState({ error: error });
-    })
+    axios
+      .get(
+        `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.searchQuery}&format=json`
+      )
+      .then((response) => {
+        this.setState({ 
+          location: response.data[0],
+          error: null
+        });
+        // return axios.get(SERVER_URL).then((response) => {
+        //   console.log(response);
+        //   this.setState({ weather: null });
+        // });
+      })
+      .catch((error) => {
+        this.setState({ error: error });
+      });
   };
 
   handleChange = (e) => {
@@ -48,18 +59,26 @@ class App extends React.Component {
               name="city"
               onChange={this.handleChange}
             />
-            <button type='submit'>
-              Explore!
-            </button>
+            <button type="submit">Explore!</button>
           </form>
-            {this.state.error &&
-          <Alert variant="danger"> 
-            {`${this.state.error.response.status }: ${this.state.error.response.data.error}`}
-          </Alert>
-            }
+          {
+            this.state.error && (
+              <Alert variant="danger">
+                {`${this.state.error.response.status}: ${this.state.error.response.data.error}`}
+              </Alert>
+            )
+          }
           <Routes>
-            <Route exact path="/search" element={<Explorer location={this.state.location} query={this.state.searchQuery}/>} />
-            <Route path="/" element={<p>Please Enter a Location</p>} />
+            <Route
+              exact
+              path="/"
+              element={
+                <Explorer
+                  location={this.state.location}
+                  query={this.state.searchQuery}
+                />
+              }
+            />
           </Routes>
         </BrowserRouter>
       </>
