@@ -26,14 +26,18 @@ class App extends React.Component {
         `https://us1.locationiq.com/v1/search?key=${API_KEY}&q=${this.state.searchQuery}&format=json`
       )
       .then((response) => {
-        this.setState({ 
-          location: response.data[0],
-          error: null
+        const city = response.data[0];
+        this.setState({
+          location: city,
+          error: null,
         });
-        // return axios.get(SERVER_URL).then((response) => {
-        //   console.log(response);
-        //   this.setState({ weather: null });
-        // });
+        return axios
+          .get(
+            `${SERVER_URL}?searchQuery=${city.display_name}&lat=${city.lat}&lon=${city.lon}`
+          )
+          .then((response) => {
+            this.setState({ weather: response.data });
+          });
       })
       .catch((error) => {
         this.setState({ error: error });
@@ -61,13 +65,11 @@ class App extends React.Component {
             />
             <button type="submit">Explore!</button>
           </form>
-          {
-            this.state.error && (
-              <Alert variant="danger">
-                {`${this.state.error.response.status}: ${this.state.error.response.data.error}`}
-              </Alert>
-            )
-          }
+          {this.state.error && (
+            <Alert variant="danger">
+              {`${this.state.error.response.data.error}`}
+            </Alert>
+          )}
           <Routes>
             <Route
               exact
@@ -76,6 +78,7 @@ class App extends React.Component {
                 <Explorer
                   location={this.state.location}
                   query={this.state.searchQuery}
+                  forecasts={this.state.weather}
                 />
               }
             />
